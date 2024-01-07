@@ -39,9 +39,9 @@ var (
 		},
 		Indexes: []*schema.Index{
 			{
-				Name:    "member_username_email",
+				Name:    "member_username_email_mobile",
 				Unique:  true,
-				Columns: []*schema.Column{MmsMembersColumns[4], MmsMembersColumns[8]},
+				Columns: []*schema.Column{MmsMembersColumns[4], MmsMembersColumns[8], MmsMembersColumns[7]},
 			},
 			{
 				Name:    "member_wechat_open_id",

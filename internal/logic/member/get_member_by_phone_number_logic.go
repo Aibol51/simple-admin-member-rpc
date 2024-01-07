@@ -2,6 +2,7 @@ package member
 
 import (
 	"context"
+
 	"github.com/suyuan32/simple-admin-common/utils/pointy"
 
 	"github.com/suyuan32/simple-admin-member-rpc/ent/member"
@@ -12,22 +13,23 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetMemberByUsernameLogic struct {
+type GetMemberByPhoneNumberLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewGetMemberByUsernameLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetMemberByUsernameLogic {
-	return &GetMemberByUsernameLogic{
+func NewGetMemberByPhoneNumberLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetMemberByPhoneNumberLogic {
+	return &GetMemberByPhoneNumberLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *GetMemberByUsernameLogic) GetMemberByUsername(in *mms.UsernameReq) (*mms.MemberInfo, error) {
-	result, err := l.svcCtx.DB.Member.Query().Where(member.UsernameEQ(in.Username)).WithRanks().First(l.ctx)
+func (l *GetMemberByPhoneNumberLogic) GetMemberByPhoneNumber(in *mms.PhoneNumberReq) (*mms.MemberInfo, error) {
+	// todo: add your logic here and delete this line
+	result, err := l.svcCtx.DB.Member.Query().Where(member.MobileEQ(in.Mobile)).WithRanks().First(l.ctx)
 	if err != nil {
 		return nil, dberrorhandler.DefaultEntError(l.Logger, err, in)
 	}

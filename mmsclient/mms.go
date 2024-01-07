@@ -34,6 +34,7 @@ type (
 	OauthProviderListResp = mms.OauthProviderListResp
 	OauthRedirectResp     = mms.OauthRedirectResp
 	PageInfoReq           = mms.PageInfoReq
+	PhoneNumberReq        = mms.PhoneNumberReq
 	TokenInfo             = mms.TokenInfo
 	TokenListReq          = mms.TokenListReq
 	TokenListResp         = mms.TokenListResp
@@ -50,6 +51,7 @@ type (
 		DeleteMember(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
 		GetMemberById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*MemberInfo, error)
 		GetMemberByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*MemberInfo, error)
+		GetMemberByPhoneNumber(ctx context.Context, in *PhoneNumberReq, opts ...grpc.CallOption) (*MemberInfo, error)
 		// MemberRank management
 		CreateMemberRank(ctx context.Context, in *MemberRankInfo, opts ...grpc.CallOption) (*BaseIDResp, error)
 		UpdateMemberRank(ctx context.Context, in *MemberRankInfo, opts ...grpc.CallOption) (*BaseResp, error)
@@ -119,6 +121,11 @@ func (m *defaultMms) GetMemberById(ctx context.Context, in *UUIDReq, opts ...grp
 func (m *defaultMms) GetMemberByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*MemberInfo, error) {
 	client := mms.NewMmsClient(m.cli.Conn())
 	return client.GetMemberByUsername(ctx, in, opts...)
+}
+
+func (m *defaultMms) GetMemberByPhoneNumber(ctx context.Context, in *PhoneNumberReq, opts ...grpc.CallOption) (*MemberInfo, error) {
+	client := mms.NewMmsClient(m.cli.Conn())
+	return client.GetMemberByPhoneNumber(ctx, in, opts...)
 }
 
 // MemberRank management

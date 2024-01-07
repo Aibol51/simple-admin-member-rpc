@@ -51,6 +51,10 @@ message UsernameReq {
   string username = 1;
 }
 
+message PhoneNumberReq {
+  string mobile = 1;
+}
+
 service Mms {
 
   // Member management
@@ -66,5 +70,7 @@ service Mms {
   rpc getMemberById (UUIDReq) returns (MemberInfo);
   // group: member
   rpc getMemberByUsername (UsernameReq) returns (MemberInfo);
+  // group: member
+  rpc getMemberByPhoneNumber (PhoneNumberReq) returns (MemberInfo);
 
 }

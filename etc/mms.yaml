@@ -6,8 +6,8 @@ DatabaseConf:
   Host: 127.0.0.1
   Port: 3306
   DBName: simple_admin
-  Username: # set your username
-  Password: # set your password
+  Username: root # set your username
+  Password: QaQ1688588.. # set your password
   MaxOpenConn: 100
   SSLMode: disable
   CacheTime: 5

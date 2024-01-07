@@ -26,6 +26,7 @@ const (
 	Mms_DeleteMember_FullMethodName           = "/mms.Mms/deleteMember"
 	Mms_GetMemberById_FullMethodName          = "/mms.Mms/getMemberById"
 	Mms_GetMemberByUsername_FullMethodName    = "/mms.Mms/getMemberByUsername"
+	Mms_GetMemberByPhoneNumber_FullMethodName = "/mms.Mms/getMemberByPhoneNumber"
 	Mms_CreateMemberRank_FullMethodName       = "/mms.Mms/createMemberRank"
 	Mms_UpdateMemberRank_FullMethodName       = "/mms.Mms/updateMemberRank"
 	Mms_GetMemberRankList_FullMethodName      = "/mms.Mms/getMemberRankList"
@@ -51,48 +52,50 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MmsClient interface {
-	//  group: base
+	// group: base
 	InitDatabase(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*BaseResp, error)
-	//  Member management
-	//  group: member
+	// Member management
+	// group: member
 	CreateMember(ctx context.Context, in *MemberInfo, opts ...grpc.CallOption) (*BaseUUIDResp, error)
-	//  group: member
+	// group: member
 	UpdateMember(ctx context.Context, in *MemberInfo, opts ...grpc.CallOption) (*BaseResp, error)
-	//  group: member
+	// group: member
 	GetMemberList(ctx context.Context, in *MemberListReq, opts ...grpc.CallOption) (*MemberListResp, error)
-	//  group: member
+	// group: member
 	DeleteMember(ctx context.Context, in *UUIDsReq, opts ...grpc.CallOption) (*BaseResp, error)
-	//  group: member
+	// group: member
 	GetMemberById(ctx context.Context, in *UUIDReq, opts ...grpc.CallOption) (*MemberInfo, error)
-	//  group: member
+	// group: member
 	GetMemberByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*MemberInfo, error)
-	//  MemberRank management
-	//  group: memberrank
+	// group: member
+	GetMemberByPhoneNumber(ctx context.Context, in *PhoneNumberReq, opts ...grpc.CallOption) (*MemberInfo, error)
+	// MemberRank management
+	// group: memberrank
 	CreateMemberRank(ctx context.Context, in *MemberRankInfo, opts ...grpc.CallOption) (*BaseIDResp, error)
-	//  group: memberrank
+	// group: memberrank
 	UpdateMemberRank(ctx context.Context, in *MemberRankInfo, opts ...grpc.CallOption) (*BaseResp, error)
-	//  group: memberrank
+	// group: memberrank
 	GetMemberRankList(ctx context.Context, in *MemberRankListReq, opts ...grpc.CallOption) (*MemberRankListResp, error)
-	//  group: memberrank
+	// group: memberrank
 	GetMemberRankById(ctx context.Context, in *IDReq, opts ...grpc.CallOption) (*MemberRankInfo, error)
-	//  group: memberrank
+	// group: memberrank
 	DeleteMemberRank(ctx context.Context, in *IDsReq, opts ...grpc.CallOption) (*BaseResp, error)
-	//  OauthProvider management
-	//  group: oauthprovider
+	// OauthProvider management
+	// group: oauthprovider
 	CreateOauthProvider(ctx context.Context, in *OauthProviderInfo, opts ...grpc.CallOption) (*BaseIDResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	UpdateOauthProvider(ctx context.Context, in *OauthProviderInfo, opts ...grpc.CallOption) (*BaseResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	GetOauthProviderList(ctx context.Context, in *OauthProviderListReq, opts ...grpc.CallOption) (*OauthProviderListResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	GetOauthProviderById(ctx context.Context, in *IDReq, opts ...grpc.CallOption) (*OauthProviderInfo, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	DeleteOauthProvider(ctx context.Context, in *IDsReq, opts ...grpc.CallOption) (*BaseResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	OauthLogin(ctx context.Context, in *OauthLoginReq, opts ...grpc.CallOption) (*OauthRedirectResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	OauthCallback(ctx context.Context, in *CallbackReq, opts ...grpc.CallOption) (*MemberInfo, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	WechatMiniProgramLogin(ctx context.Context, in *OauthLoginReq, opts ...grpc.CallOption) (*BaseResp, error)
 	// Token management
 	// group: token
@@ -174,6 +177,15 @@ func (c *mmsClient) GetMemberById(ctx context.Context, in *UUIDReq, opts ...grpc
 func (c *mmsClient) GetMemberByUsername(ctx context.Context, in *UsernameReq, opts ...grpc.CallOption) (*MemberInfo, error) {
 	out := new(MemberInfo)
 	err := c.cc.Invoke(ctx, Mms_GetMemberByUsername_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *mmsClient) GetMemberByPhoneNumber(ctx context.Context, in *PhoneNumberReq, opts ...grpc.CallOption) (*MemberInfo, error) {
+	out := new(MemberInfo)
+	err := c.cc.Invoke(ctx, Mms_GetMemberByPhoneNumber_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -355,48 +367,50 @@ func (c *mmsClient) UpdateToken(ctx context.Context, in *TokenInfo, opts ...grpc
 // All implementations must embed UnimplementedMmsServer
 // for forward compatibility
 type MmsServer interface {
-	//  group: base
+	// group: base
 	InitDatabase(context.Context, *Empty) (*BaseResp, error)
-	//  Member management
-	//  group: member
+	// Member management
+	// group: member
 	CreateMember(context.Context, *MemberInfo) (*BaseUUIDResp, error)
-	//  group: member
+	// group: member
 	UpdateMember(context.Context, *MemberInfo) (*BaseResp, error)
-	//  group: member
+	// group: member
 	GetMemberList(context.Context, *MemberListReq) (*MemberListResp, error)
-	//  group: member
+	// group: member
 	DeleteMember(context.Context, *UUIDsReq) (*BaseResp, error)
-	//  group: member
+	// group: member
 	GetMemberById(context.Context, *UUIDReq) (*MemberInfo, error)
-	//  group: member
+	// group: member
 	GetMemberByUsername(context.Context, *UsernameReq) (*MemberInfo, error)
-	//  MemberRank management
-	//  group: memberrank
+	// group: member
+	GetMemberByPhoneNumber(context.Context, *PhoneNumberReq) (*MemberInfo, error)
+	// MemberRank management
+	// group: memberrank
 	CreateMemberRank(context.Context, *MemberRankInfo) (*BaseIDResp, error)
-	//  group: memberrank
+	// group: memberrank
 	UpdateMemberRank(context.Context, *MemberRankInfo) (*BaseResp, error)
-	//  group: memberrank
+	// group: memberrank
 	GetMemberRankList(context.Context, *MemberRankListReq) (*MemberRankListResp, error)
-	//  group: memberrank
+	// group: memberrank
 	GetMemberRankById(context.Context, *IDReq) (*MemberRankInfo, error)
-	//  group: memberrank
+	// group: memberrank
 	DeleteMemberRank(context.Context, *IDsReq) (*BaseResp, error)
-	//  OauthProvider management
-	//  group: oauthprovider
+	// OauthProvider management
+	// group: oauthprovider
 	CreateOauthProvider(context.Context, *OauthProviderInfo) (*BaseIDResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	UpdateOauthProvider(context.Context, *OauthProviderInfo) (*BaseResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	GetOauthProviderList(context.Context, *OauthProviderListReq) (*OauthProviderListResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	GetOauthProviderById(context.Context, *IDReq) (*OauthProviderInfo, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	DeleteOauthProvider(context.Context, *IDsReq) (*BaseResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	OauthLogin(context.Context, *OauthLoginReq) (*OauthRedirectResp, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	OauthCallback(context.Context, *CallbackReq) (*MemberInfo, error)
-	//  group: oauthprovider
+	// group: oauthprovider
 	WechatMiniProgramLogin(context.Context, *OauthLoginReq) (*BaseResp, error)
 	// Token management
 	// group: token
@@ -438,6 +452,9 @@ func (UnimplementedMmsServer) GetMemberById(context.Context, *UUIDReq) (*MemberI
 }
 func (UnimplementedMmsServer) GetMemberByUsername(context.Context, *UsernameReq) (*MemberInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMemberByUsername not implemented")
+}
+func (UnimplementedMmsServer) GetMemberByPhoneNumber(context.Context, *PhoneNumberReq) (*MemberInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMemberByPhoneNumber not implemented")
 }
 func (UnimplementedMmsServer) CreateMemberRank(context.Context, *MemberRankInfo) (*BaseIDResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMemberRank not implemented")
@@ -631,6 +648,24 @@ func _Mms_GetMemberByUsername_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MmsServer).GetMemberByUsername(ctx, req.(*UsernameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Mms_GetMemberByPhoneNumber_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PhoneNumberReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MmsServer).GetMemberByPhoneNumber(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Mms_GetMemberByPhoneNumber_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MmsServer).GetMemberByPhoneNumber(ctx, req.(*PhoneNumberReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1011,6 +1046,10 @@ var Mms_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getMemberByUsername",
 			Handler:    _Mms_GetMemberByUsername_Handler,
+		},
+		{
+			MethodName: "getMemberByPhoneNumber",
+			Handler:    _Mms_GetMemberByPhoneNumber_Handler,
 		},
 		{
 			MethodName: "createMemberRank",

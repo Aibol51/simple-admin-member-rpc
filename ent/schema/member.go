@@ -63,7 +63,7 @@ func (Member) Edges() []ent.Edge {
 
 func (Member) Indexes() []ent.Index {
 	return []ent.Index{
-		index.Fields("username", "email").
+		index.Fields("username", "email", "mobile").
 			Unique(),
 		index.Fields("wechat_open_id").Unique(),
 	}
